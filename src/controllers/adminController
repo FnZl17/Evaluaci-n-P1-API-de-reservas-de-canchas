@@ -1,0 +1,38 @@
+const adminService = require("../services/adminService");
+
+const createSchedule = async (req, res) => {
+  try {
+    const { court, startTime, endTime } = req.body;
+
+    const schedule = await adminService.createSchedule({
+      court,
+      startTime,
+      endTime
+    });
+
+    res.status(201).json(schedule);
+  } catch (error) {
+    res.status(500).json({
+      message: "Error al crear el horario",
+      error: error.message
+    });
+  }
+};
+
+const getAllBookings = async (req, res) => {
+  try {
+    const bookings = await adminService.getAllBookings();
+
+    res.status(200).json(bookings);
+  } catch (error) {
+    res.status(500).json({
+      message: "Error al obtener las reservas",
+      error: error.message
+    });
+  }
+};
+
+module.exports = {
+  createSchedule,
+  getAllBookings
+};
